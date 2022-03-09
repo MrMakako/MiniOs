@@ -120,13 +120,16 @@ public class Directorios {
     
     }
     
+  
+    
  
     
     
     public void Guardar(Object x,String FileName){
         try{
             
-             Arhcivo=new File(Dir+"\\"+FileName);
+            
+            Arhcivo=new File(Dir+"\\"+FileName);
             ObjectOutputStream Guardado=  new ObjectOutputStream(new FileOutputStream(Arhcivo.getAbsolutePath()));
             System.out.println("Intenando guardar");
             //Guardar Caulquier objeto Este se usara 

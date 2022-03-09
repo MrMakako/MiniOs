@@ -14,6 +14,12 @@ public class UsuarioNormal extends User{
 
     public UsuarioNormal(String Username,String Password,File Dir) {
         super(Username, Password,Dir);
+        
+        
+        
+        
+        
+        
     }
     
     

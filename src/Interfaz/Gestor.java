@@ -7,7 +7,6 @@ package Interfaz;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 
 /**
  *

@@ -5,10 +5,12 @@
 package Interfaz;
 
 import java.io.File;
+import javax.swing.JDesktopPane;
 import javax.swing.JTree;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 
 /**
  *
@@ -20,17 +22,71 @@ public class ExploradorES extends javax.swing.JPanel {
      * Creates new form ExploreadoEs
      */
     
+    JDesktopPane panel;
+    File SelectedFile;
+    File Ruta;
     
-    public ExploradorES(File Ruta) {
+    
+    
+    public ExploradorES(File Ruta,JDesktopPane Desktop) {
+        
+        this.panel= Desktop;
+        this.Ruta=Ruta;
         
         initComponents();
+        
+    
         Actualizar(Ruta);
         
     }
 
+    public File getSelectedFile() {
+        return SelectedFile;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
     public JTree getArbol() {
         return Arbol;
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
+    
+    
+    
+    
+    public void SelectFile(){
+    
+        SelectedFile= new File("Z/"+Arbol.getSelectionPath().toString().replace("[","").replace(", ","\\\\").replace("]",""));
+        System.out.println(Arbol.getSelectionPath().toString());
+        System.out.println(SelectedFile.getPath());
+        
+        
+        
+        
+        
+    
+    
+    
+    }
+    
+    
+    
     
     
     
@@ -40,39 +96,62 @@ public class ExploradorES extends javax.swing.JPanel {
             
                 //Casos donde la recurisvidad es util
             
-            for (File items:Ruta.listFiles()){
-                System.out.println("ELements");
-                
-                if(!items.isFile()){
-                    model.add(new DefaultMutableTreeNode(items.getName()));
-                    
-                    CrearArbol(items,model.getNextNode());
-                
-                }else{
-                    
-                     model.add(new DefaultMutableTreeNode(items.getName()));
                 
                 
+        if(Ruta!=null && Ruta.exists() && Ruta.isDirectory()){
+            
+            
+            
+            
+  
+            for(File item:Ruta.listFiles()){
                 
+                 
+                DefaultMutableTreeNode nodo= new DefaultMutableTreeNode(item.getName());
+            
+                if(item.isDirectory()){
+                
+                    CrearArbol(item,nodo);
+  
                 }
                 
-            
+                model.add(nodo);
                 
-                
+                    
             
             
             
             
-        
-        
-             }
-             
-        
+            }
+            
+   
+   
+   
+   
+        }
+                  
     
     
     
     
     }
+   
+   
+   public void abrirBloc(){
+        //Se abre el blco de notasa   
+        
+        BlocNotas bloc= new BlocNotas(Ruta,panel);
+        
+        bloc.setPathArchivo(SelectedFile);
+        bloc.ArbriArhivo();
+        System.out.println("opcion 3");
+    
+    
+       
+   
+   
+   
+   }
    
         
         
@@ -80,19 +159,24 @@ public class ExploradorES extends javax.swing.JPanel {
     
        MenuEs.show(Arbol, evt.getX(), evt.getY());
         
-    
+        
     
     
     }
     
     
     public void Actualizar(File ruta){
+        
+        
         DefaultMutableTreeNode Raiz= new DefaultMutableTreeNode(ruta.getName());
         DefaultTreeModel Ramas= new DefaultTreeModel(Raiz);
+        Arbol.setModel(Ramas);
+
+        
         
         CrearArbol(ruta, Raiz);
         
-        Arbol.setModel(Ramas);
+
        
         
     
@@ -109,26 +193,46 @@ public class ExploradorES extends javax.swing.JPanel {
     private void initComponents() {
 
         MenuEs = new javax.swing.JPopupMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        Crear = new javax.swing.JMenuItem();
+        JOptionEliminar = new javax.swing.JMenuItem();
+        JAbrir = new javax.swing.JMenuItem();
         jScrollPane1 = new javax.swing.JScrollPane();
         Arbol = new javax.swing.JTree();
-        jToggleButton1 = new javax.swing.JToggleButton();
 
-        jMenuItem1.setText("jMenuItem1");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+        MenuEs.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MenuEs.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+                MenuEsPopupMenuWillBecomeVisible(evt);
             }
         });
-        MenuEs.add(jMenuItem1);
 
-        jMenuItem2.setText("jMenuItem2");
-        MenuEs.add(jMenuItem2);
+        Crear.setText("Crear");
+        Crear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CrearActionPerformed(evt);
+            }
+        });
+        MenuEs.add(Crear);
 
-        jMenuItem3.setText("jMenuItem3");
-        MenuEs.add(jMenuItem3);
+        JOptionEliminar.setText("Eliminar");
+        JOptionEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JOptionEliminarActionPerformed(evt);
+            }
+        });
+        MenuEs.add(JOptionEliminar);
+
+        JAbrir.setText("Abrir");
+        JAbrir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JAbrirActionPerformed(evt);
+            }
+        });
+        MenuEs.add(JAbrir);
 
         Arbol.setBackground(new java.awt.Color(102, 102, 102));
         Arbol.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -141,8 +245,6 @@ public class ExploradorES extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(Arbol);
 
-        jToggleButton1.setText("Borrar");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,9 +252,7 @@ public class ExploradorES extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jToggleButton1)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,37 +260,60 @@ public class ExploradorES extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jToggleButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void ArbolMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ArbolMouseClicked
         // TODO add your handling code here:
-
-        if(SwingUtilities.isRightMouseButton(evt)){
+        if(panel!=null){
+            if(SwingUtilities.isRightMouseButton(evt)){
             ClickDerecho(evt);
             
-            
-        
-        
+
         }
+    
+    
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_ArbolMouseClicked
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void CrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        System.out.println("pollo asado");
+    }//GEN-LAST:event_CrearActionPerformed
+
+    private void JAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JAbrirActionPerformed
+        // TODO add your handling code here:
+        SelectFile();
+        abrirBloc();
+        
+        System.out.println("Abriendo");
+    }//GEN-LAST:event_JAbrirActionPerformed
+
+    private void JOptionEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOptionEliminarActionPerformed
+        // TODO add your handling code here:
+        
+        
+        
+        
+        
+    }//GEN-LAST:event_JOptionEliminarActionPerformed
+
+    private void MenuEsPopupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_MenuEsPopupMenuWillBecomeVisible
+        // TODO add your handling code here:
+        SelectFile();
+    }//GEN-LAST:event_MenuEsPopupMenuWillBecomeVisible
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTree Arbol;
+    private javax.swing.JMenuItem Crear;
+    private javax.swing.JMenuItem JAbrir;
+    private javax.swing.JMenuItem JOptionEliminar;
     private javax.swing.JPopupMenu MenuEs;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

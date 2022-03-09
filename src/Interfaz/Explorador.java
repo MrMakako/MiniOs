@@ -5,9 +5,14 @@
 package Interfaz;
 
 import java.io.File;
+import javax.swing.DefaultListModel;
+import javax.swing.JDesktopPane;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
+
+
+
 
 /**
  *
@@ -21,10 +26,21 @@ public class Explorador extends javax.swing.JInternalFrame {
      * 
      * 
      * 
-     */
-    public Explorador(File Ruta) {
+     */ 
+    
+    
+    
+    
+    
+    
+    
+    JDesktopPane container;
+    
+   
+    public Explorador(File Ruta,JDesktopPane container) {
         initComponents();
-        ExploradorES explorer= new ExploradorES(Ruta);
+        ExploradorES explorer= new ExploradorES(Ruta,container);
+        
         explorer.setSize(100,100);
         
         explorer.setLocation(200,200);
@@ -32,7 +48,21 @@ public class Explorador extends javax.swing.JInternalFrame {
         add(explorer);
         
         
+        DefaultListModel model= new DefaultListModel();
+        
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 

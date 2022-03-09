@@ -4,18 +4,30 @@
  */
 package Interfaz;
 
+import java.awt.BorderLayout;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JColorChooser;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import minios.Directorios;
 import say.swing.JFontChooser;
 
 /**
  *
-  * @author Diego Carcamo
+ * @author Diego Carcamo
  */
-
-
 //Tendiramso que ver algun metodo default para uqe podamos abrir los docuemntos
 public class BlocNotas extends javax.swing.JInternalFrame implements Gestor {
 
@@ -23,15 +35,58 @@ public class BlocNotas extends javax.swing.JInternalFrame implements Gestor {
      * Creates new form BlocNotas
      */
     
+    
+    
+    
+    
     File ruta;
     
-    Directorios manager= new Directorios();
-    //Diretorios
     
-    public BlocNotas(File ruta) {
-        this.ruta= ruta;
+    File PathArchivo;
+
+    Directorios manager = new Directorios();
+    //Diretorios
+
+    JDesktopPane Desktop;
+
+    ExploradorES explorador;
+    
+    String CarpetaUser;
+    
+    
+    
+
+    public BlocNotas(File ruta, JDesktopPane Desktop) {
         
+        
+        
+        
+        
+        this.ruta=ruta;
+        this.Desktop = Desktop;
         initComponents();
+
+    }
+
+    public void ArbriArhivo() {
+
+        System.out.println(PathArchivo.getAbsolutePath());
+        if (PathArchivo!=null && PathArchivo.isFile()) {
+            System.out.println("es archivo");
+            initComponents();
+            
+            Abrir();
+         
+
+            Desktop.add(this);
+            this.setSize(600, 400);
+            this.setLocation(100, 50);
+            this.setVisible(true);
+
+        }
+
+        System.out.println("abrieindo Bloc de notas");
+
     }
 
     /**
@@ -43,8 +98,10 @@ public class BlocNotas extends javax.swing.JInternalFrame implements Gestor {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        Bloc = new javax.swing.JTextArea();
+        jDialog1 = new javax.swing.JDialog();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        BlocPanel = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         JFileTab = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -52,17 +109,50 @@ public class BlocNotas extends javax.swing.JInternalFrame implements Gestor {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
+        jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jDialog1Layout.createSequentialGroup()
+                .addGap(167, 167, 167)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(210, Short.MAX_VALUE))
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDialog1Layout.createSequentialGroup()
+                .addContainerGap(250, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addContainerGap())
+        );
+
         setClosable(true);
         setResizable(true);
 
-        Bloc.setColumns(20);
-        Bloc.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Bloc.setRows(5);
-        jScrollPane1.setViewportView(Bloc);
+        jScrollPane2.setViewportView(BlocPanel);
+
+        getContentPane().add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         JFileTab.setText("Archivo");
 
         jMenuItem1.setText("Guardar");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         JFileTab.add(jMenuItem1);
 
         jMenuItem2.setText("Abrir");
@@ -98,93 +188,237 @@ public class BlocNotas extends javax.swing.JInternalFrame implements Gestor {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         // TODO add your handling code here:
-        JFontChooser fontChooser= new JFontChooser();
+        JFontChooser fontChooser = new JFontChooser();
         //por ahora es null ya que no tengo el bloc activadp\
-        JOptionPane.showMessageDialog(null,fontChooser,"Escoja  un estilo",JOptionPane.PLAIN_MESSAGE);
-        Bloc.setFont(fontChooser.getSelectedFont());
-        
+        JOptionPane.showMessageDialog(null, fontChooser, "Escoja  un estilo", JOptionPane.PLAIN_MESSAGE);
+        BlocPanel.setFont(fontChooser.getSelectedFont());
+
     }//GEN-LAST:event_jMenu1MouseClicked
 
     private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         // TODO add your handling code here:
         JColorChooser selector = new JColorChooser();
-        JOptionPane.showMessageDialog(null,selector,"Escoja un color",JOptionPane.PLAIN_MESSAGE );
-        Bloc.setForeground(selector.getColor());
-        
-        
-        
+        JOptionPane.showMessageDialog(null, selector, "Escoja un color", JOptionPane.PLAIN_MESSAGE);
+        BlocPanel.setForeground(selector.getColor());
+
+
     }//GEN-LAST:event_jMenu2MouseClicked
 
     private void jMenuItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MouseClicked
         // TODO add your handling code here:
-      
-        
-    
+
+
     }//GEN-LAST:event_jMenuItem2MouseClicked
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+         // TODO add your handling code here:
+
+        ExploradorES buscar = new ExploradorES(ruta, null);
+
+        JOptionPane.showConfirmDialog(null, buscar, "Eleija arhcvo", JOptionPane.PLAIN_MESSAGE);
+        buscar.SelectFile();
+        PathArchivo= buscar.getSelectedFile();
+        
+        
+        Abrir();
+
+        System.out.println("Se desplego abrir ");
+
+
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
         // TODO add your handling code here:
         
-        ExploradorES buscar= new ExploradorES(ruta);
-        JOptionPane.showConfirmDialog(null, buscar,"Eleija arhcvo",JOptionPane.PLAIN_MESSAGE);
-  
+    
+
+    }//GEN-LAST:event_jMenuItem1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
         
-        System.out.println("Se desplego abrir ");
         
+                    
+        
+        if(ruta.isDirectory()&& PathArchivo==null){
+            
+            
+             explorador = new ExploradorES(ruta, Desktop);
+             System.out.println("Ejecutando guardar");
+
+            JOptionPane.showInternalMessageDialog(null, explorador, "Elija una carpeta", JOptionPane.YES_NO_OPTION);
+            explorador.SelectFile();
+        
+            if (explorador.getSelectedFile().isDirectory()) {
+
+              PathArchivo = explorador.getSelectedFile();
+            
+              ActionGuardar();
+              
+              
+
+            }
+        
+        
+        
+        }else{
+            
+            System.out.println("ActionGaurda -1");
+            
+            
+             ActionGuardar();
+             
+             
+            
+            
+        }
+
+
+        
+
        
-        
-        
-        
-        
-        
-        
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea Bloc;
+    private javax.swing.JTextPane BlocPanel;
     private javax.swing.JMenu JFileTab;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void ActionGuardar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+        System.out.println("ActionGuardar");
+        
+
+        if(PathArchivo.isDirectory()|| !PathArchivo.exists()){
+            
+            System.out.println("Esperean ingreso de nombre");
+                   JTextField nombre = new JTextField();
+
+                    nombre.setSize(500, 40);
+
+                   JOptionPane.showMessageDialog(null, nombre, "NombreDelArhivo", JOptionPane.PLAIN_MESSAGE);
+                   
+                    PathArchivo = new File(PathArchivo.getAbsolutePath() + "//" + nombre.getText()+".dbb");
+                    
+                    
+                    
+        
+        
+        }
+        System.out.println(ruta.getAbsolutePath());
+        if (ruta.exists()) {
+            
+           
+
+            try {
+                
+                
+                System.out.println(PathArchivo.getAbsolutePath());
+
+                ObjectOutputStream Guardar = new ObjectOutputStream(new FileOutputStream(PathArchivo));
+                Guardar.writeObject(BlocPanel);
+                
+                Guardar.close();
+                
+                
+                System.out.println("Guardano");
+       
+       
+            } catch (IOException e) {
+                
+                e.printStackTrace();
+                
+
+            }
+
+        }
+
     }
 
+    public void setPathArchivo(File PathArchivo) {
+        this.PathArchivo = PathArchivo;
+    }
+    
     @Override
+
     public void Abrir() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try{
+        
+            ObjectInputStream leer= new ObjectInputStream(new FileInputStream(PathArchivo.getAbsolutePath()));
+            
+            
+             JTextPane panelTxt= ((JTextPane)(leer.readObject()));
+            System.out.println(panelTxt.getText());
+            
+            BlocPanel.setText(panelTxt.getText());
+            BlocPanel.setForeground(panelTxt.getForeground());
+            BlocPanel.setFont(panelTxt.getFont());
+            
+            
+            BlocPanel.validate();
+           
+         
+     
+            
+             
+            
+         
+            repaint();
+            
+            
+     
+        
+        
+        
+        
+        
+        }catch(Exception e){
+            
+            
+            e.printStackTrace();
+        
+        
+        
+        
+        
+        
+        } 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+
     }
 
     @Override
     public void Cerrar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void Eliminar() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

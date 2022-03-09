@@ -4,6 +4,11 @@
  */
 package Interfaz;
 
+import java.io.File;
+import java.util.Scanner;
+import javax.swing.DefaultListModel;
+import javax.swing.JDesktopPane;
+
 /**
  *
  * @author Diego Carcamo
@@ -13,8 +18,81 @@ public class CMD extends javax.swing.JInternalFrame implements Gestor{
     /**
      * Creates new form CMD
      */
-    public CMD() {
+    /*
+    a. Mkdir <nombre>: Nueva carpeta
+b. Rm <nombre>: Eliminar carpeta
+c. Cd <nombre carpeta>: Cambiar de carpeta actual
+d. Cd.. Regresar de Carpeta
+e. Dir: Listar todas las carpetas y archivos en la carpeta actual
+f. Date: Ver fecha actual
+g. Time: Ver hora actual
+    */
+    
+    
+    
+    String Comandos;
+    
+    
+    String Linea;
+    
+    JDesktopPane desk;
+    
+    
+    
+    public CMD (File dir,JDesktopPane desk){
+        
+        this.desk= this.desk;
         initComponents();
+        
+        
+        Linea=dir.getName()+"//>>";
+        
+        update();
+        
+        
+        
+        
+      
+         
+        
+    }
+    
+    
+    private void update(){
+        CmdBox.setText(CmdBox.getText()+"\n"+Linea+"\n");
+    
+    }
+    
+    public void leer(String linea){
+        Scanner sc = new Scanner(Linea);
+        
+        sc.findInLine("Mkdir");
+        
+        
+        
+        //es que vamso a detectar las comas y leer solo desde las comas tambien 
+        
+       //
+        
+        
+        
+        
+    
+    
+    
+    }
+    
+    
+    
+    
+    
+    public void Mkdir(){
+    
+    
+    
+    
+    
+    
     }
     
     
@@ -33,31 +111,35 @@ public class CMD extends javax.swing.JInternalFrame implements Gestor{
     private void initComponents() {
 
         jToggleButton1 = new javax.swing.JToggleButton();
-        jTextField1 = new javax.swing.JTextField();
+        CmdLine = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        CmdBox = new javax.swing.JTextArea();
 
         jToggleButton1.setText("Ejecutar");
 
-        jTextArea1.setEditable(false);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        CmdBox.setEditable(false);
+        CmdBox.setBackground(new java.awt.Color(0, 0, 0));
+        CmdBox.setColumns(20);
+        CmdBox.setForeground(new java.awt.Color(255, 255, 255));
+        CmdBox.setRows(5);
+        jScrollPane1.setViewportView(CmdBox);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(106, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jToggleButton1)
-                .addGap(63, 63, 63))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(CmdLine)
+                        .addGap(18, 18, 18)
+                        .addComponent(jToggleButton1)
+                        .addGap(63, 63, 63))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 604, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,9 +147,9 @@ public class CMD extends javax.swing.JInternalFrame implements Gestor{
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jToggleButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CmdLine, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -76,9 +158,9 @@ public class CMD extends javax.swing.JInternalFrame implements Gestor{
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea CmdBox;
+    private javax.swing.JTextField CmdLine;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 

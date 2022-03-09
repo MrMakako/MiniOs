@@ -27,20 +27,22 @@ public class MainTest {
        do{
            
            System.out.println("1-Crear Carpeta"
-                   + "\n2-Seleccionar Carpeta");
+                   + "\n2-Seleccionar Carpeta"
+                   + "\n3-Ver Contenidos");
            
            
            option=sc.nextInt();
            
            
            if(option==1){
-               
+               p.MostrarCarpetas();
                System.out.println("Nombre de carpeta:");
                
                p.CrearCarpeta(sc.next());
            
            
            }if(option==2){
+               p.MostrarCarpetas();
                System.out.println("Cambiar directorios raiz");
                
                p.setDirectorio(new File(sc.next()));
@@ -48,16 +50,37 @@ public class MainTest {
            
            
            
-           }
+           }else if(option ==3){
+               
+               if(p.getDirectorio().exists()){
+                    p.MostrarCarpetas();
+                      System.out.println("Archivos dentro de d");
+               
+               
+               
+               
+               }
+               
+  
            
-           sc.next();
+           }else if(option ==4){
+               System.out.println("La borraste mi bro");
+               
+               p.borrar();
+               p.setDirectorio(new File("D"));
+               
+               
+           
+           
+           }           
+        
            
            
            
        
        
        
-       }while( option!=3);
+       }while( option!=5);
         
        
         

@@ -11,9 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import minios.BaseDatos;
+
 import minios.Directorios;
 import minios.User;
+import minios.UserManager;
 
 /**
  *
@@ -32,10 +33,14 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     private File SubDir;    
    //
     
-    private BaseDatos datos ;
-    private User loggedUser;
+   
+
     private Directorios Acces;
     
+    
+    String loggedUser;
+    
+
     
 
     public Directorios getAcces() {
@@ -43,12 +48,17 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     }
     
     
+
     
     
     
+    UserManager Manager;
     public IniciarSesion() {
         
-        datos= new BaseDatos();
+        Manager= new UserManager();
+        
+        
+
         
         
         initComponents();
@@ -66,13 +76,7 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     }
     
     
-    
-    public void User(){
-        
-    
-    
-    
-    }
+
 
     public JButton getIniciar() {
         return Iniciar;
@@ -83,13 +87,92 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     public JButton getRegistrar() {
         return registrar;
     }
+
+    public String getLoggedUser() {
+        return loggedUser;
+    }
+    
+    
+    
+    
+    
+    
+    public void Regis(String Name, String Password){
+        
+        try {
+            if(Manager.AddUser(Name, Password)){
+                //Algun mensaje
+                System.out.println("Agrgado");
+                
+                
+                CrearUserDir(Name);
+                String[] carpetas= {"Mis Documentos","Mi Musica","Mis Imagagenes"};
+                File Carpetas;
+                for(String tag:carpetas){
+                    Carpetas= new File("Z//"+Name+"//"+tag);
+                    
+                    Carpetas.mkdirs();
+                    
+                    
+                    mensaje.setText("Excelente");
+                
+                
+                }
+                
+            }else{
+                mensaje.setText("Lo siento Usuario exsitente");
+                 NameField.validate();
+                this.Password.validate();
+            
+            
+            }
+        } catch (IOException ex) {
+            
+            
+            
+            System.out.println("Error IOExceptio");
+           
+        }
+           
+    
+    
+    
+    
+    
+    }
+    
+    public void Login(String name, String paswword){
+        try {
+            if(Manager.login(name,paswword)){
+                System.out.println("Bienvenido");
+                
+                loggedUser= Manager.getLoged();
+                System.out.println(loggedUser);
+                
+        
+                
+                
+            }else{
+                mensaje.setText("No se encontro el usaurio ");
+                
+                NameField.validate();
+                Password.validate();
+                
+                
+            
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    
+    
+    
+    }
     
     
     
 
-    public User getLoggedUser() {
-        return loggedUser;
-    }
     
     
     
@@ -107,6 +190,9 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
         if(SubDir.mkdir()){
             System.out.println("se a crado una carpeta con el nombre de "+ Name);
              System.out.println(SubDir.getAbsolutePath());
+             
+             
+             
              
              
             
@@ -195,8 +281,8 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(170, 170, 170))))
+                        .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(145, 145, 145)
                 .addComponent(Iniciar)
@@ -207,7 +293,7 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addContainerGap(84, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
@@ -218,11 +304,12 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(mensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Iniciar)
                     .addComponent(registrar))
@@ -261,17 +348,8 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     @Override
     public void Iniciar() {
         
-        User cuenta=datos.Verify(Password.getText(),NameField.getText());
-        if(cuenta!=null){
-            loggedUser=cuenta;
-            mensaje.setText("Bienvenido");
-            mensaje.validate();
-            
-            
- 
-        }
-    
-        
+        Login(NameField.getText(),Password.getText());
+
         
         
         
@@ -285,41 +363,11 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     @Override
     public void Crear() {
         
+        Regis(NameField.getText(),Password.getText());
+        
        
         
-        
-        if(datos.BuscarUsuario(Password.getText(), NameField.getText())==null){
-            mensaje.setText("Creado Exitosamen");
-            mensaje.validate();
-            //Para evitar que el posubirdir quede nulo
-            CrearUserDir(NameField.getText());
-           //Se crear el directorio del usuario 
-            datos.CrearUsuario(NameField.getText(),Password.getText(),SubDir);
-            
-          
-            
-            try {
-                datos.CrearCarpetas(NameField.getText());
-                 //Se crean las subcarpetas Documentos, imagnes, musica
-            } catch (IOException ex) {
-               // Logger.getLogger(IniciarSesion.class.getName()).log(Level.SEVERE, null, JOptionPane.PLAIN_MESSAGE);
-            }
-            
-            
-            
-            
-            
 
-            
-        
-        
-        }else{
-            mensaje.setText("No e sposibloe crearla");
-            mensaje.validate();
-           
-        
-        }
-        
         
     }
 }
