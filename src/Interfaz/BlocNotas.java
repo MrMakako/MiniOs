@@ -21,7 +21,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-import minios.Directorios;
+
 import say.swing.JFontChooser;
 
 /**
@@ -44,7 +44,7 @@ public class BlocNotas extends javax.swing.JInternalFrame implements Gestor {
     
     File PathArchivo;
 
-    Directorios manager = new Directorios();
+
     //Diretorios
 
     JDesktopPane Desktop;

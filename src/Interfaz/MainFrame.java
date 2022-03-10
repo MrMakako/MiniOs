@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import minios.Directorios;
+
 import minios.User;
 import minios.UserManager;
 
@@ -34,7 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
     IniciarSesion Login ;
 
     String User;
-    Directorios LoggedDir;
+
     
     File Ruta;
     
@@ -50,7 +50,10 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         AddLogin();
         
-        LoggedDir= new Directorios();
+        
+        
+        
+
         
         
         
@@ -82,9 +85,11 @@ public class MainFrame extends javax.swing.JFrame {
                         
                         
                         Login.dispose();
+                        BarraTareas.setVisible(true);
                     
                     }
                    
+                    
                     
                     
                 
@@ -139,6 +144,10 @@ public class MainFrame extends javax.swing.JFrame {
         
         Desktop.add(Login);
         Desktop.validate();
+        
+        BarraTareas.setVisible(false);
+        
+        
       
         
        

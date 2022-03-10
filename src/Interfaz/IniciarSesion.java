@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-import minios.Directorios;
+
 import minios.User;
 import minios.UserManager;
 
@@ -35,7 +35,7 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
     
    
 
-    private Directorios Acces;
+
     
     
     String loggedUser;
@@ -43,10 +43,6 @@ public class IniciarSesion extends javax.swing.JInternalFrame implements Protoco
 
     
 
-    public Directorios getAcces() {
-        return Acces;
-    }
-    
     
 
     
